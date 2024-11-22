@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Mensagens</h1>
+                    <span class="subheading">Mensagens enviadas pelos queridos leitores.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+
+{% block content %}
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            {% for mensagem in mensagens %}
+            {% if mensagem.nome %}
+                <a href="{% url 'index' %}">
+                    <h2 class="post-title">{{ mensagem.nome }}</h2>
+                    <h3 class="post-subtitle">{{ mensagem.mensagem }}</h3>
+                </a>
+                <p class="post-meta">
+                    Postado por
+                    <a href="#!">{{ mensagem.email }}</a>
+                    {% if mensagem.cidade %}
+                    em {{ mensagem.cidade }}
+                    {% endif %}
+                </p>
+                <a href="{% url 'deletar_mensagem' mensagem.id %}">
+                    <button class="btn btn-danger btn-sm">Deletar</button>
+                </a>
+                <a href="{% url 'editar_mensagem' mensagem.id %}">
+                    <button class="btn btn-warning btn-sm">Editar</button>
+                </a>
+            <!-- Divider-->
+            <hr class="my-4" />
+            {% endif %}
+            {% endfor %}
+            <!-- Pager-->
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" type="submit" href="#!">Older Posts →</a></div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
