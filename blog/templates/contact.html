@@ -26,49 +26,13 @@
                 <div class="my-5">
                     <form id="contactForm" method="POST">
                         {% csrf_token %}
-                            <div class="form-floating">
-                                <input class="form-control {% if erro.nome %}is-invalid{% endif %}" id="name" name="nome" type="text" placeholder="Digite seu nome..." required />
-                                <label for="name">Nome</label>
-                                <div class="invalid-feedback">O nome é obrigatório.</div>
-                            </div>
-                            <div class="form-floating">
-                                <input class="form-control {% if erro.email %}is-invalid{% endif %}" id="email" name="email" type="email" placeholder="Digite seu email..." data-sb-validations="required,email" />
-                                <label for="email">Endereço de email</label>
-                                <div class="invalid-feedback">Email é obrigatório.</div>
-                            </div>
-                            <div class="form-floating">
-                                <input class="form-control {% if erro.telefone %}is-invalid{% endif %}" id="phone" type="tel" name="telefone" placeholder="Digite seu telefone..." data-sb-validations="required" />
-                                <label for="phone">Telefone</label>
-                                <div class="invalid-feedback">O telefone é obrigatório.</div>
-                            </div>
-                            <div class="form-floating">
-                                <input class="form-control" id="cidade" type="cidade" name="cidade" placeholder="Digite sua cidade..." data-sb-validations="required" />
-                                <label for="cidade">Cidade</label>
-                            </div>
-                            <div class="form-floating">
-                                <textarea class="form-control {% if erro.mensagem %}is-invalid{% endif %}" id="message" name="mensagem" placeholder="Digite sua mensagem aqui..." style="height: 12rem" data-sb-validations="required"></textarea>
-                                <label for="message">Mensagem</label>
-                                <div class="invalid-feedback">A mensagem é obrigatória.</div>
-                            </div>
+                        {% for field in form %}
+                        <div class="form-floating">
+                            {{ field.errors }}
+                            {{ field }}
+                            {{ field.label_tag }}
                         </div>
-                        <br />
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br />
-                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                            </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                        {% endfor %}
                         <!-- Submit Button-->
                         <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Enviar</button>
                     </form>
