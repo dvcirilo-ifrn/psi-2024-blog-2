@@ -51,13 +51,15 @@ def editar_mensagem(request, mensagem_id):
     mensagem = get_object_or_404(Mensagem, pk=mensagem_id)
     context = {
         "blog": Blog.objects.first(),
-        "form": MensagemForm(initial=model_to_dict(mensagem))
+        "form": MensagemForm(instance=mensagem)
     }
     if request.method == "POST":
-        form = MensagemForm(request.POST)
+        form = MensagemForm(request.POST, instance=mensagem)
         if form.is_valid():
             form.save()
-        return redirect('mensagens')
+            return redirect('mensagens')
+        else:
+            context["form"] = form # esse é o form com os erros
 
     return render(request, "contact.html", context)
 
