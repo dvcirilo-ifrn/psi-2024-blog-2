@@ -1,8 +1,13 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Mensagem
+from .models import Mensagem, Post
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = "__all__"
 
 class MensagemForm(forms.ModelForm):
     class Meta:
