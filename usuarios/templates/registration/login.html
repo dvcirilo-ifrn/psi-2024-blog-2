@@ -1,0 +1,16 @@
+{% extends "base_user.html" %}
+{% load static crispy_forms_filters %}
+
+{% block title %}Login{% endblock title %}
+{% block content %}
+<div class="card-body">
+    <form method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type="submit">Login</button>
+    </form>
+</div>
+<div class="card-footer text-center py-3">
+    <div class="small"><a href="{% url 'cadastro' %}">Não possui uma conta? Inscreva-se!</a></div>
+</div>
+{% endblock content %}
