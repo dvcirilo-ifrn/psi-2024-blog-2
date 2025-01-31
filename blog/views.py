@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.models import model_to_dict
 from .models import Post, Blog, Mensagem
 from .forms import MensagemForm, PostForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 def index(request):
@@ -26,6 +26,7 @@ def sobre(request):
     return render(request, "about.html", context)
 
 @login_required
+@permission_required('blog.add_post', raise_exception=True)
 def criar_post(request):
     context = {
         "blog": Blog.objects.first(),
@@ -34,7 +35,9 @@ def criar_post(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            post.usuario = request.user
+            post.save()
             return redirect('index')
         else:
             context["form"] = form # esse é o form com os erros
@@ -43,6 +46,7 @@ def criar_post(request):
 
     return render(request, "create_post.html", context)
 
+@permission_required('blog.change_post', raise_exception=True)
 def editar_post(request, post_id):
     poste = get_object_or_404(Post, pk=post_id)
     context = {

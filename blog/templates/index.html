@@ -22,7 +22,7 @@
             <!-- Divider-->
             <hr class="my-4" />
             {% endfor %}
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated and perms.blog.add_post %}
             <div class="d-flex justify-content-end mb-4">
                 <a class="btn btn-primary text-uppercase" href="{% url 'criar_post' %}">
                     Criar Post
